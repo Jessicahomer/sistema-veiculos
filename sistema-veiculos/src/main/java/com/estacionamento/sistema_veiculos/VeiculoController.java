@@ -1,4 +1,4 @@
-ppackage com.estacionamento.sistema_veiculos.controller;
+package com.estacionamento.sistema_veiculos.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
