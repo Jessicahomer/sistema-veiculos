@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque de Veículos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container my-4">
+    <h1 class="text-center mb-4">🚗 Sistema Automotivo - Estoque de Veículos</h1>
+
+    <!-- Tabela de veículos -->
+    <h2>Estoque Atual</h2>
+    <table class="table table-striped table-hover" id="tabelaVeiculos">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Placa</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Ano</th>
+            <th>Cor</th>
+            <th>Preço</th>
+            <th>Quilometragem</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Formulário -->
+    <h2>Cadastrar Novo Veículo </h2>
+    <form id="formCadastroVeiculo">
+        <div class="mb-3">
+            <label for="inputPlaca" class="form-label">Placa:</label>
+            <input type="text" id="inputPlaca" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="inputMarca" class="form-label">Marca:</label>
+            <input type="text" id="inputMarca" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="inputModelo" class="form-label">Modelo:</label>
+            <input type="text" id="inputModelo" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="inputAno" class="form-label">Ano:</label>
+            <input type="number" id="inputAno" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="inputCor" class="form-label">Cor:</label>
+            <input type="text" id="inputCor" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="inputPreco" class="form-label">Preço (R$):</label>
+            <input type="number" id="inputPreco" class="form-control" step="0.01" required>
+        </div>
+        <div class="mb-3">
+            <label for="inputQuilometragem" class="form-label">Quilometragem:</label>
+            <input type="number" id="inputQuilometragem" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="selectStatus" class="form-label">Status:</label>
+            <select id="selectStatus" class="form-select" required>
+                <option value="Disponível">Disponível</option>
+                <option value="Vendido">Vendido</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Cadastrar Veículo</button>
+    </form>
+</div>
+
+<script>
+    // Lista de veículos iniciais
+    const veiculos = [
+      { id: 1, placa: "ABC-1234", marca: "Honda", modelo: "Civic", ano: 2020, cor: "Preto", preco: 95000, quilometragem: 35000, status: "Disponível" },
+      { id: 2, placa: "XYZ-5678", marca: "Toyota", modelo: "Corolla", ano: 2019, cor: "Branco", preco: 88000, quilometragem: 42000, status: "Disponível" },
+      { id: 3, placa: "JKL-9101", marca: "Chevrolet", modelo: "Onix", ano: 2022, cor: "Prata", preco: 78000, quilometragem: 15000, status: "Vendido" },
+      { id: 4, placa: "MNO-1122", marca: "Fiat", modelo: "Argo", ano: 2021, cor: "Vermelho", preco: 69000, quilometragem: 22000, status: "Disponível" }
+    ];
+
+    // Função para exibir veículos na tabela
+    function mostrarVeiculos() {
+      const tbody = document.querySelector("#tabelaVeiculos tbody");
+      tbody.innerHTML = "";
+      veiculos.forEach(v => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${v.id}</td>
+          <td>${v.placa}</td>
+          <td>${v.marca}</td>
+          <td>${v.modelo}</td>
+          <td>${v.ano}</td>
+          <td>${v.cor}</td>
+          <td>R$ ${v.preco.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</td>
+          <td>${v.quilometragem} km</td>
+          <td>${v.status}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Simula o cadastro de novos veículos
+    document.getElementById("formCadastroVeiculo").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const novo = {
+        id: veiculos.length + 1,
+        placa: document.getElementById("inputPlaca").value,
+        marca: document.getElementById("inputMarca").value,
+        modelo: document.getElementById("inputModelo").value,
+        ano: parseInt(document.getElementById("inputAno").value),
+        cor: document.getElementById("inputCor").value,
+        preco: parseFloat(document.getElementById("inputPreco").value),
+        quilometragem: parseInt(document.getElementById("inputQuilometragem").value),
+        status: document.getElementById("selectStatus").value
+      };
+
+      veiculos.push(novo);
+      mostrarVeiculos();
+      document.getElementById("formCadastroVeiculo").reset();
+      alert("✅ Veículo cadastrado com sucesso (simulação)!");
+    });
+
+    // Ao abrir a página, mostra os veículos iniciais
+    window.onload = mostrarVeiculos;
+</script>
+</body>
+</html>
